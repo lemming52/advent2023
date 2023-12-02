@@ -1,4 +1,4 @@
-# Advent of Code 2022 Solutions
+# Advent of Code 2023 Solutions
 
 My set of solutions for [Advent of Code 2023](https://adventofcode.com/2023), written in Golang because _I want more practice_.
 
@@ -24,16 +24,16 @@ go run main.go -all
 Day | Challenge |Day | Challenge
 ----|-----------|----|----------
 1 | `trebuchet` | 14 | ` `
-2 | `` | 15 | ` `
-3 | `` | 16 | ` `
-4 | `` | 17 | ` `
-5 | `` | 18 | ` `
-6 | `` | 19 | ` `
-7 | `` | 20 | ` `
-8 | `` | 21 | ` `
-9 | `` | 22 | ` `
-10 | `` | 23 | ` `
-11 | `` | 24 | ` `
+2 | `cubeconundrum` | 15 | ` `
+3 | ` ` | 16 | ` `
+4 | ` ` | 17 | ` `
+5 | ` ` | 18 | ` `
+6 | ` ` | 19 | ` `
+7 | ` ` | 20 | ` `
+8 | ` ` | 21 | ` `
+9 | ` ` | 22 | ` `
+10 | ` ` | 23 | ` `
+11 | ` ` | 24 | ` `
 12 | ` ` | 25 | ` `
 13 | ` `
 

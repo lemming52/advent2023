@@ -2,6 +2,7 @@ package main
 
 import (
 	"advent/solutions/d01trebuchet"
+	"advent/solutions/d02cubeconundrum"
 	"flag"
 	"fmt"
 	"time"
@@ -15,6 +16,7 @@ func main() {
 
 	completed := []string{
 		"trebuchet",
+		"cubeconundrum",
 	}
 	if *all {
 		previous := time.Now()
@@ -37,6 +39,10 @@ func RunChallenge(challenge string) string {
         input := "inputs/d01trebuchet.txt"
 		A, B := d01trebuchet.Run(input)
 		res = fmt.Sprintf("trebuchet Results A: %s B: %s", A, B)
+	case "cubeconundrum", "2":
+        input := "inputs/d02cubeconundrum.txt"
+		A, B := d02cubeconundrum.Run(input)
+		res = fmt.Sprintf("cubeconundrum Results A: %s B: %s", A, B)
 
     }
 	return res
