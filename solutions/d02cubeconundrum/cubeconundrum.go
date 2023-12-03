@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-// const cubePattern = `(\d+) (red|blue|green)`
-
 type Game struct {
 	cubes      map[string]int
 	minimumSet map[string]int
@@ -71,8 +69,7 @@ func (g *Game) power() int {
 
 func PlayGames(lines []string) (int, int) {
 	game := NewGame(12, 13, 14)
-	total := 0
-	totalPower := 0
+	total, totalPower := 0, 0
 	for i, l := range lines {
 		possible, power := game.PlayGame(l)
 		if possible {

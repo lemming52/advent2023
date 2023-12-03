@@ -3,6 +3,7 @@ package main
 import (
 	"advent/solutions/d01trebuchet"
 	"advent/solutions/d02cubeconundrum"
+	"advent/solutions/d03gearratios"
 	"flag"
 	"fmt"
 	"time"
@@ -10,13 +11,14 @@ import (
 
 func main() {
 	var challenge string
-	flag.StringVar(&challenge, "challenge", "campcleanup", "name or number of challenge")
+	flag.StringVar(&challenge, "challenge", "trebuchet", "name or number of challenge")
 	all := flag.Bool("all", false, "display all results")
 	flag.Parse()
 
 	completed := []string{
 		"trebuchet",
 		"cubeconundrum",
+		"gearratios",
 	}
 	if *all {
 		previous := time.Now()
@@ -43,6 +45,10 @@ func RunChallenge(challenge string) string {
         input := "inputs/d02cubeconundrum.txt"
 		A, B := d02cubeconundrum.Run(input)
 		res = fmt.Sprintf("cubeconundrum Results A: %s B: %s", A, B)
+	case "gearratios", "3":
+        input := "inputs/d03gearratios.txt"
+		A, B := d03gearratios.Run(input)
+		res = fmt.Sprintf("gearratios Results A: %s B: %s", A, B)
 
     }
 	return res

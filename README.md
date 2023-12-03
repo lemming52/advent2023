@@ -25,7 +25,7 @@ Day | Challenge |Day | Challenge
 ----|-----------|----|----------
 1 | `trebuchet` | 14 | ` `
 2 | `cubeconundrum` | 15 | ` `
-3 | ` ` | 16 | ` `
+3 | `gearratios` | 16 | ` `
 4 | ` ` | 17 | ` `
 5 | ` ` | 18 | ` `
 6 | ` ` | 19 | ` `

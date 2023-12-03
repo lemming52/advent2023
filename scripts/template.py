@@ -32,7 +32,7 @@ import (
 
 func main() {{
 	var challenge string
-	flag.StringVar(&challenge, "challenge", "campcleanup", "name or number of challenge")
+	flag.StringVar(&challenge, "challenge", "trebuchet", "name or number of challenge")
 	all := flag.Bool("all", false, "display all results")
 	flag.Parse()
 
@@ -81,9 +81,7 @@ def build_package_file(number, name: str) -> str:
     return f"""package d{number}{name}
 
 import (
-	"bufio"
-	"log"
-    "os"
+	"advent/solutions/utils"
 )
 
 func Run(path string) (string, string) {{
