@@ -2,6 +2,7 @@ package d03gearratios
 
 import (
 	"advent/solutions/utils"
+	"fmt"
 	"strconv"
 )
 
@@ -23,9 +24,16 @@ func newPart(val, x1, x2, y int) *Part {
 	}
 }
 
+type Gear struct {
+	value int
+	count int
+}
+
 type Engine struct {
 	Parts   []*Part
+	Lines   []string
 	Symbols [][]bool
+	Gears   map[string]*Gear
 	xMax    int
 	yMax    int
 }
@@ -33,6 +41,7 @@ type Engine struct {
 func newEngine(x, y int) *Engine {
 	e := &Engine{
 		Parts: []*Part{},
+		Gears: map[string]*Gear{},
 		xMax:  x,
 		yMax:  y,
 	}
@@ -73,17 +82,45 @@ func (e *Engine) TotalPartNumbers() int {
 }
 
 func (e *Engine) CheckPart(p *Part) int {
+	value := 0
 	neighbours := e.GetPartNeighbours(p)
 	for _, xy := range neighbours {
 		if e.Symbols[xy[1]][xy[0]] {
-			return p.value
+			value = p.value
+			if e.Lines[xy[1]][xy[0]] == '*' {
+				e.AddGear(xy[0], xy[1], p)
+			}
 		}
 	}
-	return 0
+	return value
+}
+
+func (e *Engine) AddGear(x, y int, p *Part) {
+	v, ok := e.Gears[fmt.Sprintf("%d,%d", x, y)]
+	if ok {
+		v.count += 1
+		v.value *= p.value
+	} else {
+		e.Gears[fmt.Sprintf("%d,%d", x, y)] = &Gear{
+			value: p.value,
+			count: 1,
+		}
+	}
+}
+
+func (e *Engine) CountGears() int {
+	total := 0
+	for _, v := range e.Gears {
+		if v.count == 2 {
+			total += v.value
+		}
+	}
+	return total
 }
 
 func BuildEngine(lines []string) *Engine {
 	e := newEngine(len(lines[0])-1, len(lines)-1)
+	e.Lines = lines
 	for y, l := range lines {
 		val, magnitude := 0, 0
 		for x, c := range l {
@@ -113,12 +150,13 @@ func BuildEngine(lines []string) *Engine {
 	return e
 }
 
-func PartNumbers(lines []string) int {
+func PartNumbers(lines []string) (int, int) {
 	e := BuildEngine(lines)
-	return e.TotalPartNumbers()
+	return e.TotalPartNumbers(), e.CountGears()
 }
 
 func Run(path string) (string, string) {
 	lines := utils.LoadAsStrings(path)
-	return strconv.Itoa(PartNumbers(lines)), "B"
+	a, b := PartNumbers(lines)
+	return strconv.Itoa(a), strconv.Itoa(b)
 }

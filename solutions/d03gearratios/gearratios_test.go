@@ -19,6 +19,7 @@ func TestPartNumbers(t *testing.T) {
 		"...$.*....",
 		".664.598..",
 	}
-	res := PartNumbers(input)
-	assert.Equal(t, 4361, res)
+	a, b := PartNumbers(input)
+	assert.Equal(t, 4361, a)
+	assert.Equal(t, 467835, b)
 }
