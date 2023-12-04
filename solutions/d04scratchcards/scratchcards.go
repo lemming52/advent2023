@@ -6,7 +6,31 @@ import (
 	"strings"
 )
 
-func checkCard(s string) int {
+type CardSet struct {
+	cards []int
+	total int
+}
+
+func NewCardSet(n int) *CardSet {
+	c := &CardSet{
+		cards: make([]int, n),
+		total: 0,
+	}
+	for i := 0; i < n; i++ {
+		c.cards[i] = 0
+	}
+	return c
+}
+
+func (c *CardSet) HandleCard(i, matches int) {
+	c.cards[i] += 1
+	for j := 1; j <= matches; j++ {
+		c.cards[i+j] += c.cards[i]
+	}
+	c.total += c.cards[i]
+}
+
+func checkCard(s string) (int, int) {
 	card := strings.Split(s, ":")
 	numbers := strings.Split(card[1], "|")
 	scoring, winning := strings.Trim(numbers[0], " "), strings.Trim(numbers[1], " ")
@@ -20,7 +44,7 @@ func checkCard(s string) int {
 		score[v] = true
 	}
 
-	total := 0
+	total, count := 0, 0
 	wins := strings.Split(winning, " ")
 	for _, v := range wins {
 		if v == "" {
@@ -28,6 +52,7 @@ func checkCard(s string) int {
 		}
 		_, ok := score[v]
 		if ok {
+			count += 1
 			if total == 0 {
 				total = 1
 			} else {
@@ -35,18 +60,22 @@ func checkCard(s string) int {
 			}
 		}
 	}
-	return total
+	return total, count
 }
 
-func PlayScratchcards(lines []string) int {
+func PlayScratchcards(lines []string) (int, int) {
+	cards := NewCardSet(len(lines))
 	total := 0
-	for _, l := range lines {
-		total += checkCard(l)
+	for i, l := range lines {
+		val, matches := checkCard(l)
+		total += val
+		cards.HandleCard(i, matches)
 	}
-	return total
+	return total, cards.total
 }
 
 func Run(path string) (string, string) {
 	lines := utils.LoadAsStrings(path)
-	return strconv.Itoa(PlayScratchcards(lines)), "B"
+	a, b := PlayScratchcards(lines)
+	return strconv.Itoa(a), strconv.Itoa(b)
 }
