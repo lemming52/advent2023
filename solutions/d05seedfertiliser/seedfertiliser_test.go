@@ -1,7 +1,6 @@
 package d05seedfertiliser
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -64,6 +63,10 @@ func TestMapRanges(t *testing.T) {
 			offset:   52 - 50,
 		},
 	}
-	fmt.Println(mapRanges(inputRanges, inputTransforms))
-	assert.Equal(t, 0, 1)
+	expected := [][]int{
+		{57, 69},
+		{81, 94},
+	}
+	res := mapRanges(inputRanges, inputTransforms)
+	assert.Equal(t, expected, res)
 }

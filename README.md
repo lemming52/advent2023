@@ -28,7 +28,7 @@ Day | Challenge |Day | Challenge
 3 | `gearratios` | 16 | ` `
 4 | `scratchcards` | 17 | ` `
 5 | `seedfertiliser` | 18 | ` `
-6 | ` ` | 19 | ` `
+6 | `waitforit` | 19 | ` `
 7 | ` ` | 20 | ` `
 8 | ` ` | 21 | ` `
 9 | ` ` | 22 | ` `

@@ -6,6 +6,7 @@ import (
 	"advent/solutions/d03gearratios"
 	"advent/solutions/d04scratchcards"
 	"advent/solutions/d05seedfertiliser"
+	"advent/solutions/d06waitforit"
 	"flag"
 	"fmt"
 	"time"
@@ -23,6 +24,7 @@ func main() {
 		"gearratios",
 		"scratchcards",
 		"seedfertiliser",
+		"waitforit",
 	}
 	if *all {
 		previous := time.Now()
@@ -61,6 +63,10 @@ func RunChallenge(challenge string) string {
         input := "inputs/d05seedfertiliser.txt"
 		A, B := d05seedfertiliser.Run(input)
 		res = fmt.Sprintf("seedfertiliser Results A: %s B: %s", A, B)
+	case "waitforit", "6":
+        input := "inputs/d06waitforit.txt"
+		A, B := d06waitforit.Run(input)
+		res = fmt.Sprintf("waitforit Results A: %s B: %s", A, B)
 
     }
 	return res
