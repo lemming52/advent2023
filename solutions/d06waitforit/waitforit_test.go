@@ -11,6 +11,7 @@ func TestMarginError(t *testing.T) {
 		"Time:      7  15   30",
 		"Distance:  9  40  200",
 	}
-	res := MarginError(input)
-	assert.Equal(t, 288, res)
+	a, b := MarginError(input)
+	assert.Equal(t, 288, a)
+	assert.Equal(t, 71503, b)
 }
