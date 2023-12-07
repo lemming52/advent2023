@@ -7,6 +7,7 @@ import (
 	"advent/solutions/d04scratchcards"
 	"advent/solutions/d05seedfertiliser"
 	"advent/solutions/d06waitforit"
+	"advent/solutions/d07camelcards"
 	"flag"
 	"fmt"
 	"time"
@@ -25,6 +26,7 @@ func main() {
 		"scratchcards",
 		"seedfertiliser",
 		"waitforit",
+		"camelcards",
 	}
 	if *all {
 		previous := time.Now()
@@ -67,6 +69,10 @@ func RunChallenge(challenge string) string {
         input := "inputs/d06waitforit.txt"
 		A, B := d06waitforit.Run(input)
 		res = fmt.Sprintf("waitforit Results A: %s B: %s", A, B)
+	case "camelcards", "7":
+        input := "inputs/d07camelcards.txt"
+		A, B := d07camelcards.Run(input)
+		res = fmt.Sprintf("camelcards Results A: %s B: %s", A, B)
 
     }
 	return res
