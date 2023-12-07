@@ -14,6 +14,7 @@ func TestScoreHands(t *testing.T) {
 		"KTJJT 220",
 		"QQQJA 483",
 	}
-	a := ScoreHands(input)
+	a, b := ScoreHands(input)
 	assert.Equal(t, 6440, a)
+	assert.Equal(t, 5905, b)
 }
