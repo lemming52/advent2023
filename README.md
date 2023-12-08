@@ -29,8 +29,8 @@ Day | Challenge |Day | Challenge
 4 | `scratchcards` | 17 | ` `
 5 | `seedfertiliser` | 18 | ` `
 6 | `waitforit` | 19 | ` `
-7 | ` ` | 20 | ` `
-8 | ` ` | 21 | ` `
+7 | `camelcards` | 20 | ` `
+8 | `hauntedwasteland` | 21 | ` `
 9 | ` ` | 22 | ` `
 10 | ` ` | 23 | ` `
 11 | ` ` | 24 | ` `
