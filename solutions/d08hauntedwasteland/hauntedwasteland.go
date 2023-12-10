@@ -150,27 +150,6 @@ func MultiTrack(positions []string, instructions string, connections map[string]
 		position = nextOption
 	}
 	return position
-	/*
-		i, steps, length := 0, 0, len(instructions)
-		for true {
-			if i == length {
-				i = 0
-			}
-			steps += 1
-			for j, p := range positions {
-				if instructions[i] == 'L' {
-					positions[j] = connections[p][0]
-				} else {
-					positions[j] = connections[p][1]
-				}
-			}
-			if isFinalState(positions) {
-				return steps
-			}
-			i += 1
-		}
-		return 0
-	*/
 }
 
 func isEndState(s string) bool {

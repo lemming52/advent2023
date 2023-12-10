@@ -31,8 +31,8 @@ Day | Challenge |Day | Challenge
 6 | `waitforit` | 19 | ` `
 7 | `camelcards` | 20 | ` `
 8 | `hauntedwasteland` | 21 | ` `
-9 | ` ` | 22 | ` `
-10 | ` ` | 23 | ` `
+9 | `miragemaintenance` | 22 | ` `
+10 | `pipemaze` | 23 | ` `
 11 | ` ` | 24 | ` `
 12 | ` ` | 25 | ` `
 13 | ` `
