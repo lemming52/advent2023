@@ -61,12 +61,7 @@ func TraversePipe(lines []string, startX, startY int) (int, int) {
 		distance += 1
 	}
 	handleOthers(startX, startY, xMax, yMax, inDirection, firstDirection, visited, left, right)
-	l, r := countArea(left), countArea(right)
-	fmt.Println(l, r)
-	if l < r {
-		return distance / 2, l
-	}
-	return distance / 2, r
+	return distance / 2, countPockets(xMax, yMax, left, visited)
 }
 
 func nextMove(c byte, x, y int, d Direction) (int, int, Direction) {
@@ -167,6 +162,45 @@ func selectUnvisited(x, y int, in, out Direction) ([][]int, [][]int) {
 		}
 	}
 	return nil, nil
+}
+
+func countPockets(xMax, yMax int, left, visited [][]bool) int {
+	leftTotal, rightTotal := 0, 0
+	explored := buildGrid(xMax, yMax)
+	xMax, yMax = xMax-1, yMax-1
+	for j := 0; j <= yMax; j++ {
+		for i := 0; i <= xMax; i++ {
+			if visited[j][i] || explored[j][i] {
+				continue
+			}
+			t, l := exploreCell(i, j, xMax, yMax, left, visited, explored)
+			if l {
+				leftTotal += t
+			} else {
+				rightTotal += t
+			}
+		}
+	}
+	if leftTotal < rightTotal {
+		return leftTotal
+	}
+	return rightTotal
+}
+
+func exploreCell(x, y, xMax, yMax int, left, visited, explored [][]bool) (int, bool) {
+	neighbours := utils.All2DNeighbours(x, y, xMax, yMax)
+	isLeft := left[y][x]
+	total := 1
+	explored[y][x] = true
+	for _, xy := range neighbours {
+		if visited[xy[1]][xy[0]] || explored[xy[1]][xy[0]] {
+			continue
+		}
+		inc, l := exploreCell(xy[0], xy[1], xMax, yMax, left, visited, explored)
+		total += inc
+		isLeft = isLeft || l
+	}
+	return total, isLeft
 }
 
 func countArea(grid [][]bool) int {
