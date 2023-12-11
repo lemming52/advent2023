@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func buildGalaxy(lines []string) [][]int {
+func buildGalaxy(lines []string, increment int) [][]int {
 	columns := make([]bool, len(lines[0]))
 	for i := range columns {
 		columns[i] = true
@@ -24,7 +24,7 @@ func buildGalaxy(lines []string) [][]int {
 			}
 		}
 		if vacant {
-			currentYIncrement += 1
+			currentYIncrement += increment
 		}
 	}
 
@@ -45,15 +45,15 @@ func buildGalaxy(lines []string) [][]int {
 			nextGalaxy = galaxies[j]
 		}
 		if c {
-			currentXIncrement += 1
+			currentXIncrement += increment
 			continue
 		}
 	}
 	return galaxies
 }
 
-func ExpandGalaxy(lines []string) int {
-	galaxies := buildGalaxy(lines)
+func ExpandGalaxy(lines []string, increment int) int {
+	galaxies := buildGalaxy(lines, increment)
 	return galaxyPaths(galaxies)
 }
 
@@ -74,6 +74,6 @@ func manhattan(a, b []int) int {
 
 func Run(path string) (string, string) {
 	lines := utils.LoadAsStrings(path)
-	a := ExpandGalaxy(lines)
-	return strconv.Itoa(a), "B"
+	a, b := ExpandGalaxy(lines, 1), ExpandGalaxy(lines, 999999)
+	return strconv.Itoa(a), strconv.Itoa(b)
 }
