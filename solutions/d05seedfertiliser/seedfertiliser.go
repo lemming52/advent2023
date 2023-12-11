@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// Transform encapsulates a mapping range, the start and end values and the offset to add
 type Transform struct {
 	minRange, maxRange int
 	offset             int
@@ -27,6 +28,7 @@ func MapSeeds(lines []string) (int, int) {
 	return singleSeed, seedRanges(seeds, transforms)
 }
 
+// buildTransforms computes the transform ranges for each step in the mapping
 func buildTransforms(lines []string) [][]*Transform {
 	transforms := [][]*Transform{}
 	index := 3
@@ -48,6 +50,7 @@ func buildTransforms(lines []string) [][]*Transform {
 	return transforms
 }
 
+// buildTransformStep computes all transform ranges for a single map step
 func buildTransformStep(lines []string) []*Transform {
 	ranges := make([]*Transform, len(lines))
 	for i, l := range lines {
@@ -80,6 +83,7 @@ func convertToRanges(seeds []int) [][]int {
 	return seedRanges
 }
 
+// singleSeeds solves for when the transforms are maps for single values
 func singleSeeds(seeds []int, transforms [][]*Transform) int {
 	minimum := math.MaxInt
 	for _, s := range seeds {
@@ -93,14 +97,21 @@ func singleSeeds(seeds []int, transforms [][]*Transform) int {
 	return minimum
 }
 
-func seedRanges(seeds []int, transforms [][]*Transform) int {
-	ranges := convertToRanges(seeds)
+// checkTransform transforms a given value for a single mapping step
+func checkTransforms(val int, transforms []*Transform) int {
 	for _, t := range transforms {
-		ranges = mapRanges(ranges, t)
+		v, ok := t.MapValue(val)
+		if ok {
+			return v
+		}
 	}
-	return ranges[0][0]
+	return val
 }
 
+// mapRanges changes values based on the transforms
+// given a range of values, it applies a transform to that range where applicable
+// and splits off the unapplicable sections to try again with the other transforms
+// it's a bit awkward
 func mapRanges(ranges [][]int, transforms []*Transform) [][]int {
 	newRanges := [][]int{}
 	for _, r := range ranges {
@@ -164,14 +175,13 @@ func mapRanges(ranges [][]int, transforms []*Transform) [][]int {
 	return outputRanges
 }
 
-func checkTransforms(val int, transforms []*Transform) int {
+// seedRanges solves with seed ranges and returns the lowest
+func seedRanges(seeds []int, transforms [][]*Transform) int {
+	ranges := convertToRanges(seeds)
 	for _, t := range transforms {
-		v, ok := t.MapValue(val)
-		if ok {
-			return v
-		}
+		ranges = mapRanges(ranges, t)
 	}
-	return val
+	return ranges[0][0]
 }
 
 func Run(path string) (string, string) {

@@ -5,6 +5,7 @@ import (
 	"strconv"
 )
 
+// Enum of cardinal directions
 type Direction int
 
 const (
@@ -14,6 +15,7 @@ const (
 	West
 )
 
+// buildGrid builds an empty grid of bools to size
 func buildGrid(xMax, yMax int) [][]bool {
 	grid := make([][]bool, yMax)
 	for j := 0; j < yMax; j++ {
@@ -22,6 +24,8 @@ func buildGrid(xMax, yMax int) [][]bool {
 	return grid
 }
 
+// findFirstMove looks at the start position to find one of the connected pipes
+// and the direction that pipe is moved into
 func findFirstMove(pipes []string, x, y int) (int, int, Direction) {
 	if y != 0 {
 		c := pipes[y-1][x]
@@ -40,6 +44,10 @@ func findFirstMove(pipes []string, x, y int) (int, int, Direction) {
 	return x - 1, y, West
 }
 
+// TraversePipe moves all across the pipe, totalling the distance
+// as the pipe is traversed pockets are spotted to be on either
+// the right or left of the pipe
+// finally the pockets of not pipe are explored and area counted
 func TraversePipe(lines []string, startX, startY int) (int, int) {
 	xMax, yMax := len(lines[0]), len(lines)
 	visited, left := buildGrid(xMax, yMax), buildGrid(xMax, yMax)
@@ -63,6 +71,8 @@ func TraversePipe(lines []string, startX, startY int) (int, int) {
 	return distance / 2, countPockets(xMax, yMax, left, visited)
 }
 
+// nextMove evaluates a pipe segment, returning the next coordinate and
+// the direction that segment is entered
 func nextMove(c byte, x, y int, d Direction) (int, int, Direction) {
 	char := rune(c)
 	switch char {
@@ -101,6 +111,7 @@ func nextMove(c byte, x, y int, d Direction) (int, int, Direction) {
 	}
 }
 
+// handleOthers flags adjacent cells to the left of the pipe
 func handleOthers(x, y, xMax, yMax int, in, out Direction, visited, left [][]bool) {
 	leftN := selectLeftUnvisited(x, y, in, out)
 	for _, xy := range leftN {
@@ -112,6 +123,7 @@ func handleOthers(x, y, xMax, yMax int, in, out Direction, visited, left [][]boo
 	}
 }
 
+// selectLeftUnvisited returns the adjacent unvisited neighbours for any in/out traversal of a cell
 func selectLeftUnvisited(x, y int, in, out Direction) [][]int {
 	if in == South {
 		switch out {
@@ -156,6 +168,9 @@ func selectLeftUnvisited(x, y int, in, out Direction) [][]int {
 	return nil
 }
 
+// countPockets recursively explores pockets of not pipe in the space, and totals
+// the area to the left and right of the pipe. returns whichever is smaller
+// I know that's an assumption, but it worked.
 func countPockets(xMax, yMax int, left, visited [][]bool) int {
 	leftTotal, rightTotal := 0, 0
 	explored := buildGrid(xMax, yMax)
@@ -179,6 +194,8 @@ func countPockets(xMax, yMax int, left, visited [][]bool) int {
 	return rightTotal
 }
 
+// exploreCell recursively expands a pocket to its full extent, and computes the area
+// also notes if the pocket is to the left or right of the pipe
 func exploreCell(x, y, xMax, yMax int, left, visited, explored [][]bool) (int, bool) {
 	neighbours := utils.All2DNeighbours(x, y, xMax, yMax)
 	isLeft := left[y][x]
@@ -193,18 +210,6 @@ func exploreCell(x, y, xMax, yMax int, left, visited, explored [][]bool) (int, b
 		isLeft = isLeft || l
 	}
 	return total, isLeft
-}
-
-func countArea(grid [][]bool) int {
-	total := 0
-	for _, y := range grid {
-		for _, x := range y {
-			if x {
-				total += 1
-			}
-		}
-	}
-	return total
 }
 
 func Run(path string) (string, string) {

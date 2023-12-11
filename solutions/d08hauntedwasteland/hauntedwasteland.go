@@ -28,6 +28,7 @@ func CrossDesert(lines []string) (int, int) {
 	return SingleTrack(instructions, connections), MultiTrack(starts, instructions, connections)
 }
 
+// For the single path, just follow the instruction cycle to the end
 func SingleTrack(instructions string, connections map[string][]string) int {
 	i, steps, length := 0, 0, len(instructions)
 	current := start
@@ -51,6 +52,12 @@ func SingleTrack(instructions string, connections map[string][]string) int {
 	return 0
 }
 
+// CycleReport encapsulates the continuous loop of a traversal
+// at some point (given the question) the map traversal must
+// loop, eventually reaching the same location at the same point
+// in the instructions. This struct captures those cycles:
+// the overall length, the number of steps before it starts and
+// and final states in the cycle
 type CycleReport struct {
 	position    string
 	startOffset int
@@ -58,6 +65,9 @@ type CycleReport struct {
 	finalStates []int
 }
 
+// isInEndState, given an overall step count, returns if the
+// cycle is in a final state. It also returns the next valid
+// total step count for a final state in this cycle
 func (c *CycleReport) isInEndState(steps int) (bool, int) {
 	cyclePosition := (steps - c.startOffset) % c.length
 	isEndState := false
@@ -76,15 +86,19 @@ func (c *CycleReport) isInEndState(steps int) (bool, int) {
 	return isEndState, nextPosition
 }
 
-func (c *CycleReport) print() {
-	fmt.Println(c.position, c.startOffset, c.length, c.finalStates)
-}
-
+// EndState is a convenience struct combining the final state name and steps taken to reach it
 type EndState struct {
 	name  string
 	steps int
 }
 
+// Multitrack emulates simultaneous path traversal. First it given a list of valid start positions
+// finds the cycle definitions for those start points.
+// With those cycle definitions, we check if a step count results in all positions having a valid
+// end state. If not, we select the highest step count that next results in a valid state for at
+// least one cycle, check that, and repeat until successful
+//
+// This is not a good solution
 func MultiTrack(positions []string, instructions string, connections map[string][]string) int {
 	cycles := make([]*CycleReport, len(positions))
 	for j, p := range positions {

@@ -30,6 +30,7 @@ func (c *CardSet) HandleCard(i, matches int) {
 	c.total += c.cards[i]
 }
 
+// checkCard scores each card and returns the number of matches
 func checkCard(s string) (int, int) {
 	card := strings.Split(s, ":")
 	numbers := strings.Split(card[1], "|")

@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// solve t^2 - Tt + D = 0
 func solve(T, D float64) (int, int) {
 	det := math.Sqrt(T*T - 4*D)
 	return int(math.Floor((T-det)/2)) + 1, int(math.Ceil((T+det)/2)) - 1
@@ -28,6 +29,7 @@ func MarginError(lines []string) (int, int) {
 	return output, max - min + 1
 }
 
+// This one just involved solving a quadratic equation.
 func Run(path string) (string, string) {
 	lines := utils.LoadAsStrings(path)
 	a, b := MarginError(lines)

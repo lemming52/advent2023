@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Hand captures the info of a hand, it's hand score/scoring rank, it's score if allowing jokers and the bid
 type Hand struct {
 	hand       string
 	score      int
@@ -25,6 +26,7 @@ func newHand(s string) *Hand {
 	}
 }
 
+// Score scores a hand, it does this by computing the counts of each card rank in the hand
 func Score(hand string) (int, int) {
 	cards := map[rune]int{}
 	for _, v := range hand {
@@ -54,6 +56,7 @@ func Score(hand string) (int, int) {
 	return score, checkScoreJoker(highestCount, secondHighest, j)
 }
 
+// checkScore takes the two highest matching card counts of a hand and returns the score
 func checkScore(a, b int) int {
 	if a == b {
 		if a == 1 {
@@ -79,6 +82,7 @@ func checkScore(a, b int) int {
 	}
 }
 
+// checkScoreJoker uses the count of jokers, and the two highest card counts to return the hand score including jokers
 func checkScoreJoker(highest, second, joker int) int {
 	if joker < second {
 		// Two pair => Full house
@@ -101,6 +105,7 @@ func checkScoreJoker(highest, second, joker int) int {
 
 }
 
+// CompareHand takes two hands and returns if a is worse than b
 func CompareHand(a, b *Hand, joker bool) bool {
 	if !joker {
 		if a.score == b.score {
@@ -115,6 +120,7 @@ func CompareHand(a, b *Hand, joker bool) bool {
 
 }
 
+// compare iterates across the hands character by character to see which is higher
 func compare(a, b string) bool {
 	for i, c := range a {
 		d := rune(b[i])
@@ -135,6 +141,7 @@ func compare(a, b string) bool {
 	return false
 }
 
+// compareFaceCards checks which of two face cards is higher
 func compareFaceCards(a, b rune) bool {
 	// We know a != b
 	switch a {
@@ -151,6 +158,7 @@ func compareFaceCards(a, b rune) bool {
 	}
 }
 
+// compareJoker compares two hands including joker scores
 func compareJoker(a, b string) bool {
 	for i, c := range a {
 		d := rune(b[i])
@@ -176,6 +184,7 @@ func compareJoker(a, b string) bool {
 	return false
 }
 
+// ScoreHands ranks and totals the bids for both scores, by scoring each hand, then sorting by rank
 func ScoreHands(lines []string) (int, int) {
 	hands := make([]*Hand, len(lines))
 	for i, l := range lines {
@@ -199,6 +208,9 @@ func ScoreHands(lines []string) (int, int) {
 	return firstTotal, secondTotal
 }
 
+// Run solves
+// Rather than this method, changed to a list format for each hand and replaced the face cards with numerical values
+// This solution is overly complicated.
 func Run(path string) (string, string) {
 	lines := utils.LoadAsStrings(path)
 	a, b := ScoreHands(lines)
