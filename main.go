@@ -11,6 +11,7 @@ import (
 	"advent/solutions/d08hauntedwasteland"
 	"advent/solutions/d09miragemaintenance"
 	"advent/solutions/d10pipemaze"
+	"advent/solutions/d11cosmicexpansion"
 	"flag"
 	"fmt"
 	"time"
@@ -33,6 +34,7 @@ func main() {
 		"hauntedwasteland",
 		"miragemaintenance",
 		"pipemaze",
+		"cosmicexpansion",
 	}
 	if *all {
 		previous := time.Now()
@@ -91,6 +93,10 @@ func RunChallenge(challenge string) string {
         input := "inputs/d10pipemaze.txt"
 		A, B := d10pipemaze.Run(input)
 		res = fmt.Sprintf("pipemaze Results A: %s B: %s", A, B)
+	case "cosmicexpansion", "11":
+        input := "inputs/d11cosmicexpansion.txt"
+		A, B := d11cosmicexpansion.Run(input)
+		res = fmt.Sprintf("cosmicexpansion Results A: %s B: %s", A, B)
 
     }
 	return res

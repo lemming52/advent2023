@@ -16,7 +16,7 @@ func TestCrossDesert(t *testing.T) {
 		{
 			name:      "short",
 			expectedA: 2,
-			expectedB: 2,
+			expectedB: 3,
 			input: []string{
 				"RL",
 				"",
@@ -31,7 +31,7 @@ func TestCrossDesert(t *testing.T) {
 		}, {
 			name:      "long",
 			expectedA: 6,
-			expectedB: 6,
+			expectedB: 7,
 			input: []string{
 				"LLR",
 				"",

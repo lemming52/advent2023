@@ -33,7 +33,7 @@ Day | Challenge |Day | Challenge
 8 | `hauntedwasteland` | 21 | ` `
 9 | `miragemaintenance` | 22 | ` `
 10 | `pipemaze` | 23 | ` `
-11 | ` ` | 24 | ` `
+11 | `cosmicexpansion` | 24 | ` `
 12 | ` ` | 25 | ` `
 13 | ` `
 

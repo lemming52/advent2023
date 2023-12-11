@@ -2,7 +2,6 @@ package d10pipemaze
 
 import (
 	"advent/solutions/utils"
-	"fmt"
 	"strconv"
 )
 
@@ -43,24 +42,24 @@ func findFirstMove(pipes []string, x, y int) (int, int, Direction) {
 
 func TraversePipe(lines []string, startX, startY int) (int, int) {
 	xMax, yMax := len(lines[0]), len(lines)
-	visited, left, right := buildGrid(xMax, yMax), buildGrid(xMax, yMax), buildGrid(xMax, yMax)
+	visited, left := buildGrid(xMax, yMax), buildGrid(xMax, yMax)
 	nextX, nextY, firstDirection := findFirstMove(lines, startX, startY)
 	inDirection := firstDirection
 	visited[nextY][nextX] = true
-	left[nextY][nextX], right[nextY][nextX] = false, false
+	left[nextY][nextX] = false
 	nextC := lines[nextY][nextX]
 	distance := 1
 	for nextC != 'S' {
 		nX, nY, outDirection := nextMove(nextC, nextX, nextY, inDirection)
-		handleOthers(nextX, nextY, xMax, yMax, inDirection, outDirection, visited, left, right)
+		handleOthers(nextX, nextY, xMax, yMax, inDirection, outDirection, visited, left)
 		nextX, nextY = nX, nY
 		inDirection = outDirection
 		nextC = lines[nextY][nextX]
 		visited[nextY][nextX] = true
-		left[nextY][nextX], right[nextY][nextX] = false, false
+		left[nextY][nextX] = false
 		distance += 1
 	}
-	handleOthers(startX, startY, xMax, yMax, inDirection, firstDirection, visited, left, right)
+	handleOthers(startX, startY, xMax, yMax, inDirection, firstDirection, visited, left)
 	return distance / 2, countPockets(xMax, yMax, left, visited)
 }
 
@@ -102,8 +101,8 @@ func nextMove(c byte, x, y int, d Direction) (int, int, Direction) {
 	}
 }
 
-func handleOthers(x, y, xMax, yMax int, in, out Direction, visited, left, right [][]bool) {
-	leftN, rightN := selectUnvisited(x, y, in, out)
+func handleOthers(x, y, xMax, yMax int, in, out Direction, visited, left [][]bool) {
+	leftN := selectLeftUnvisited(x, y, in, out)
 	for _, xy := range leftN {
 		if xy[0] >= 0 && xy[1] >= 0 && xy[0] < xMax && xy[1] < yMax {
 			if !visited[xy[1]][xy[0]] {
@@ -111,57 +110,50 @@ func handleOthers(x, y, xMax, yMax int, in, out Direction, visited, left, right 
 			}
 		}
 	}
-	for _, xy := range rightN {
-		if xy[0] >= 0 && xy[1] >= 0 && xy[0] < xMax && xy[1] < yMax {
-			if !visited[xy[1]][xy[0]] {
-				right[xy[1]][xy[0]] = true
-			}
-		}
-	}
 }
 
-func selectUnvisited(x, y int, in, out Direction) ([][]int, [][]int) {
+func selectLeftUnvisited(x, y int, in, out Direction) [][]int {
 	if in == South {
 		switch out {
 		case East:
-			return nil, [][]int{{x - 1, y}, {x, y + 1}}
+			return nil
 		case South:
-			return [][]int{{x + 1, y}}, [][]int{{x - 1, y}}
+			return [][]int{{x + 1, y}}
 		case West:
-			return [][]int{{x + 1, y}, {x, y + 1}}, nil
+			return [][]int{{x + 1, y}, {x, y + 1}}
 		}
 	}
 	if in == West {
 		switch out {
 		case South:
-			return nil, [][]int{{x - 1, y}, {x, y - 1}}
+			return nil
 		case West:
-			return [][]int{{x, y + 1}}, [][]int{{x, y - 1}}
+			return [][]int{{x, y + 1}}
 		case North:
-			return [][]int{{x - 1, y}, {x, y + 1}}, nil
+			return [][]int{{x - 1, y}, {x, y + 1}}
 		}
 	}
 	if in == North {
 		switch out {
 		case West:
-			return nil, [][]int{{x + 1, y}, {x, y - 1}}
+			return nil
 		case North:
-			return [][]int{{x - 1, y}}, [][]int{{x + 1, y}}
+			return [][]int{{x - 1, y}}
 		case East:
-			return [][]int{{x - 1, y}, {x, y - 1}}, nil
+			return [][]int{{x - 1, y}, {x, y - 1}}
 		}
 	}
 	if in == East {
 		switch out {
 		case North:
-			return nil, [][]int{{x + 1, y}, {x, y + 1}}
+			return nil
 		case East:
-			return [][]int{{x, y - 1}}, [][]int{{x, y + 1}}
+			return [][]int{{x, y - 1}}
 		case South:
-			return [][]int{{x + 1, y}, {x, y - 1}}, nil
+			return [][]int{{x + 1, y}, {x, y - 1}}
 		}
 	}
-	return nil, nil
+	return nil
 }
 
 func countPockets(xMax, yMax int, left, visited [][]bool) int {
