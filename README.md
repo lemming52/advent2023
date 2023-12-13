@@ -34,8 +34,8 @@ Day | Challenge |Day | Challenge
 9 | `miragemaintenance` | 22 | ` `
 10 | `pipemaze` | 23 | ` `
 11 | `cosmicexpansion` | 24 | ` `
-12 | ` ` | 25 | ` `
-13 | ` `
+12 | `hotsprings` | 25 | ` `
+13 | `pointsofincidence`
 
 ### Adding new template
 

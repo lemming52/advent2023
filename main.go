@@ -12,6 +12,8 @@ import (
 	"advent/solutions/d09miragemaintenance"
 	"advent/solutions/d10pipemaze"
 	"advent/solutions/d11cosmicexpansion"
+	"advent/solutions/d12hotsprings"
+	"advent/solutions/d13pointsofincidence"
 	"flag"
 	"fmt"
 	"time"
@@ -35,6 +37,8 @@ func main() {
 		"miragemaintenance",
 		"pipemaze",
 		"cosmicexpansion",
+		"hotsprings",
+		"pointsofincidence",
 	}
 	if *all {
 		previous := time.Now()
@@ -97,6 +101,14 @@ func RunChallenge(challenge string) string {
         input := "inputs/d11cosmicexpansion.txt"
 		A, B := d11cosmicexpansion.Run(input)
 		res = fmt.Sprintf("cosmicexpansion Results A: %s B: %s", A, B)
+	case "hotsprings", "12":
+        input := "inputs/d12hotsprings.txt"
+		A, B := d12hotsprings.Run(input)
+		res = fmt.Sprintf("hotsprings Results A: %s B: %s", A, B)
+	case "pointsofincidence", "13":
+        input := "inputs/d13pointsofincidence.txt"
+		A, B := d13pointsofincidence.Run(input)
+		res = fmt.Sprintf("pointsofincidence Results A: %s B: %s", A, B)
 
     }
 	return res
