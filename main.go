@@ -16,6 +16,7 @@ import (
 	"advent/solutions/d13pointsofincidence"
 	"advent/solutions/d14parabolicreflectordish"
 	"advent/solutions/d15lenslibrary"
+	"advent/solutions/d16thefloorwillbelava"
 	"flag"
 	"fmt"
 	"time"
@@ -43,6 +44,7 @@ func main() {
 		"pointsofincidence",
 		"parabolicreflectordish",
 		"lenslibrary",
+		"thefloorwillbelava",
 	}
 	if *all {
 		previous := time.Now()
@@ -121,6 +123,10 @@ func RunChallenge(challenge string) string {
         input := "inputs/d15lenslibrary.txt"
 		A, B := d15lenslibrary.Run(input)
 		res = fmt.Sprintf("lenslibrary Results A: %s B: %s", A, B)
+	case "thefloorwillbelava", "16":
+        input := "inputs/d16thefloorwillbelava.txt"
+		A, B := d16thefloorwillbelava.Run(input)
+		res = fmt.Sprintf("thefloorwillbelava Results A: %s B: %s", A, B)
 
     }
 	return res
