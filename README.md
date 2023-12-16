@@ -23,8 +23,8 @@ go run main.go -all
 
 Day | Challenge |Day | Challenge
 ----|-----------|----|----------
-1 | `trebuchet` | 14 | ` `
-2 | `cubeconundrum` | 15 | ` `
+1 | `trebuchet` | 14 | `parabolicreflectordish`
+2 | `cubeconundrum` | 15 | `lenslibrary`
 3 | `gearratios` | 16 | ` `
 4 | `scratchcards` | 17 | ` `
 5 | `seedfertiliser` | 18 | ` `
