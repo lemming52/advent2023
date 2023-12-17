@@ -25,7 +25,7 @@ Day | Challenge |Day | Challenge
 ----|-----------|----|----------
 1 | `trebuchet` | 14 | `parabolicreflectordish`
 2 | `cubeconundrum` | 15 | `lenslibrary`
-3 | `gearratios` | 16 | ` `
+3 | `gearratios` | 16 | `thefloorwillbelava`
 4 | `scratchcards` | 17 | ` `
 5 | `seedfertiliser` | 18 | ` `
 6 | `waitforit` | 19 | ` `
